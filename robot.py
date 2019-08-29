@@ -9,7 +9,7 @@ def angle_trunc(a):
 
 class robot:
 
-    def __init__(self, x = 0.0, y = 0.0, heading = 0.0, turning = 2*pi/10, distance = 1.0):
+    def __init__(self, x = 0.0, y = 0.0, heading = 0.0, turning = 2*pi/10, distance = 1.0, idx = 0):
         """This function is called when you create a new robot. It sets some of 
         the attributes of the robot, either to their default values or to the values
         specified when it is created."""
@@ -21,6 +21,7 @@ class robot:
         self.turning_noise    = 0.0
         self.distance_noise    = 0.0
         self.measurement_noise = 0.0
+        self.idx = idx
 
 
     def set_noise(self, new_t_noise, new_d_noise, new_m_noise):
@@ -48,10 +49,13 @@ class robot:
         self.heading = angle_trunc(self.heading)
         self.x += distance * cos(self.heading)
         self.y += distance * sin(self.heading)
+        
+        res = robot(self.x, self.y, self.heading, self.turning, self.distance, self.idx)
+        return res
 
     def move_in_circle(self):
         """This function is used to advance the runaway target bot."""
-        self.move(self.turning, self.distance)
+        return self.move(self.turning, self.distance)
 
     def sense(self):
         """This function represents the robot sensing its location. When
